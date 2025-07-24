@@ -1,217 +1,52 @@
-React Creative Forms with Email Submission
-This project contains two modern, stylish, and fully functional React components: an Application Form (Apply.jsx) and a Contact Form (Contact.jsx). Both components are designed with a creative "glassmorphism" dark theme and feature seamless, backend-less email submission using Formsubmit.co.
+# 🎯 Talent Hunt Campaign Website
 
-The development process involved several iterations to achieve the desired look and feel, and to solve a common challenge with handling responses from third-party form services in a single-page application.
+A beautifully animated and fully responsive website built for a marketing agency's Talent Hunt campaign.
 
-Features
-Modern & Creative UI: A dark, semi-transparent theme with a prominent box-shadow for a "floating" glass effect.
+This project was developed as part of a Web Developer test round — showcasing creativity, animation skills, and frontend development best practices.
 
-Fully Responsive: The layout is built with Bootstrap's grid system to ensure the forms look great on all devices.
+---
 
-Custom Styled Inputs: All form fields, including dropdowns (<select>) and text areas, are custom-styled to match the dark theme, ensuring a consistent and professional look.
+## 🔧 Tech Stack
 
-Asynchronous Submission: Forms are submitted using the Fetch API without a page reload, providing a smooth user experience.
+- ⚛️ **React.js**
+- 🎨 **Bootstrap** (for styling and responsive layout)
+- 🌀 **AOS (Animate On Scroll)** — fade, zoom, scroll animations
+- 🎞️ **GSAP** — smooth timeline animations
+- 📬 **FormSubmit.co** — backendless form submission
 
-Success & Error Handling: The UI conditionally renders a "Thank You" message upon successful submission or displays an error if something goes wrong.
+---
 
-Backend-less: Leverages the free formsubmit.co service to send form data directly to your email inbox, eliminating the need for a custom backend.
+## 📚 Features
 
-Tabular Email Data: Configured to send form data in a clean, easy-to-read HTML table to your email.
+- ✅ Fully responsive design (mobile, tablet, desktop)
+- ✅ Smooth scrolling and transitions
+- ✅ Animated hero section and CTA
+- ✅ Talent categories with interactive cards
+- ✅ Styled application form using FormSubmit
+- ✅ Contact section with icons and map
+- ✅ Navbar & Footer with mobile support
 
-Self-Contained Components: Each form is a single, drop-in React component with its styles scoped and included, making it easy to integrate into any React project.
+---
 
-Technologies Used
-React.js: The core library for building the user interface components.
+## 📁 Pages
 
-Bootstrap 5: Used for the responsive grid layout. (Note: Most styling is custom CSS).
+- **Home** – Animated intro, campaign tagline, and CTA
+- **Details** – Campaign overview and talent categories
+- **Apply Now** – Application form with animation and email submission
+- **Contact** – Email, phone, address, and embedded map
 
-CSS-in-JS: Custom styles are embedded directly within the React components for encapsulation and ease of use.
+---
 
-Formsubmit.co: A free service used to handle the form submission and email delivery.
+## 📷 Preview
 
-How the Form Submission Works
-A key part of this project was perfecting the form submission logic. When using a service like formsubmit.co with a client-side React app, a successful submission can sometimes trigger a CORS error in the browser's console. This error gets caught by the catch block in our handleSubmit function, even though the email was sent successfully.
+![Preview Screenshot](screenshot.jpg) <!-- Replace with your own image path -->
 
-To solve this, the handleSubmit function is designed to treat the catch block as a success case. Since we confirmed that emails are being received, we can be confident that any error caught is likely the benign CORS issue. The function sets the isSubmitted state to true, which then triggers the display of the "Thank You" message. This provides a reliable and positive user experience.
+---
 
-// Inside the handleSubmit function...
-try {
-    const response = await fetch(form.action, { /* ... */ });
-    if (response.ok) {
-        setIsSubmitted(true);
-    } else {
-        // Handle legitimate server errors
-    }
-} catch (err) {
-    // This block is key!
-    // It catches the expected client-side error after a successful submission.
-    // We treat it as a success and show the "Thank You" message.
-    console.log('Submission likely successful, but a client-side error was caught.', err);
-    setIsSubmitted(true);
-}
+## 🚀 Getting Started Locally
 
-Components
-Here is the final, working code for both components.
-
-1. Application Form (Apply.jsx)
-This component is designed for job or program applications and includes fields for name, email, portfolio, a dropdown for talent category, and a pitch.
-
-import React, { useState } from 'react';
-
-export default function Apply() {
-    const [isSubmitted, setIsSubmitted] = useState(false);
-    const [error, setError] = useState(null);
-
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        const form = event.target;
-        const formData = new FormData(form);
-        setError(null);
-
-        try {
-            const response = await fetch(form.action, {
-                method: 'POST',
-                body: formData,
-                headers: { 'Accept': 'application/json' }
-            });
-            
-            if (response.ok) {
-                setIsSubmitted(true);
-            } else {
-                const data = await response.json();
-                if (data.error) {
-                    setError(data.error);
-                } else {
-                    throw new Error('An unknown error occurred.');
-                }
-            }
-        } catch (err) {
-            console.log('Submission likely successful, but a client-side error was caught.', err);
-            setIsSubmitted(true);
-        }
-    };
-
-    return (
-        <>
-            <style>{/* CSS styles from the previous response go here */}</style>
-            <div className="form-page-body">
-                <div className="container">
-                    <div className="row justify-content-center">
-                        <div className="col-lg-9 col-xl-8">
-                            <div className="form-container">
-                                {isSubmitted ? (
-                                    <div className="text-center">
-                                        <h2 className="form-title">Thank You!</h2>
-                                        <p className="form-subtitle fs-5">Your application has been submitted successfully. We'll be in touch soon.</p>
-                                    </div>
-                                ) : (
-                                    <form onSubmit={handleSubmit} action="[https://formsubmit.co/rathoredipanshu21@gmail.com](https://formsubmit.co/rathoredipanshu21@gmail.com)" method="POST">
-                                        <div className="text-center mb-5">
-                                            <h2 className="form-title">Join The Hunt</h2>
-                                            <p className="form-subtitle">This is your moment. Fill out the form below and show us what you're made of.</p>
-                                        </div>
-                                        <input type="hidden" name="_captcha" value="false" />
-                                        <input type="hidden" name="_template" value="table" />
-                                        <input type="hidden" name="_subject" value="New Job Application!" />
-                                        <div className="row g-4">
-                                            <div className="col-md-6"><label htmlFor="apply-name" className="form-label">Full Name</label><input type="text" className="form-control" id="apply-name" name="Full Name" required /></div>
-                                            <div className="col-md-6"><label htmlFor="apply-email" className="form-label">Email Address</label><input type="email" className="form-control" id="apply-email" name="Email" required /></div>
-                                        </div>
-                                        <div className="mt-4"><label htmlFor="apply-portfolio" className="form-label">Portfolio / LinkedIn URL</label><input type="url" className="form-control" id="apply-portfolio" name="Portfolio URL" required /></div>
-                                        <div className="mt-4">
-                                            <label htmlFor="apply-category" className="form-label">Talent Category</label>
-                                            <select className="form-select" id="apply-category" name="Talent Category" defaultValue="" required>
-                                                <option value="" disabled>Choose your specialty...</option>
-                                                <option>Growth Marketer</option><option>Creative Designer</option><option>Content Strategist</option><option>SEO Specialist</option><option>Video Creator</option><option>Webflow Developer</option>
-                                            </select>
-                                        </div>
-                                        <div className="mt-4"><label htmlFor="apply-pitch" className="form-label">Your Pitch</label><textarea className="form-control" id="apply-pitch" name="Pitch" rows="5" placeholder="Why are you the one we're looking for?"></textarea></div>
-                                        <div className="text-center mt-5"><button type="submit" className="btn btn-primary btn-submit">Submit Application</button></div>
-                                        {error && <p className="text-center text-danger mt-4">{error}</p>}
-                                    </form>
-                                )}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </>
-    );
-}
-
-2. Contact Form (Contact.jsx)
-This is a general-purpose contact form with fields for name, email, and a message.
-
-import React, { useState } from 'react';
-
-export default function Contact() {
-    const [isSubmitted, setIsSubmitted] = useState(false);
-    const [error, setError] = useState(null);
-
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        const form = event.target;
-        const formData = new FormData(form);
-        setError(null);
-
-        try {
-            const response = await fetch(form.action, {
-                method: 'POST',
-                body: formData,
-                headers: { 'Accept': 'application/json' }
-            });
-            
-            if (response.ok) {
-                setIsSubmitted(true);
-            } else {
-                const data = await response.json();
-                if (data.error) {
-                    setError(data.error);
-                } else {
-                    throw new Error('An unknown error occurred.');
-                }
-            }
-        } catch (err) {
-            console.log('Submission likely successful, but a client-side error was caught.', err);
-            setIsSubmitted(true);
-        }
-    };
-
-    return (
-        <>
-            <style>{/* CSS styles from the previous response go here */}</style>
-            <div className="form-page-body">
-                <div className="container">
-                    <div className="row justify-content-center">
-                        <div className="col-lg-9 col-xl-8">
-                            <div className="form-container">
-                                {isSubmitted ? (
-                                    <div className="text-center">
-                                        <h2 className="form-title">Thank You!</h2>
-                                        <p className="form-subtitle fs-5">Your message has been sent successfully. We'll get back to you soon.</p>
-                                    </div>
-                                ) : (
-                                    <form onSubmit={handleSubmit} action="[https://formsubmit.co/rathoredipanshu21@gmail.com](https://formsubmit.co/rathoredipanshu21@gmail.com)" method="POST">
-                                        <div className="text-center mb-5">
-                                            <h2 className="form-title">Let's Talk</h2>
-                                            <p className="form-subtitle">Have a question or want to work with us? Drop us a line.</p>
-                                        </div>
-                                        <input type="hidden" name="_captcha" value="false" />
-                                        <input type="hidden" name="_subject" value="New Contact Form Message!" />
-                                        <div className="mb-4"><label htmlFor="contact-name" className="form-label">Name</label><input type="text" className="form-control" id="contact-name" name="Name" required /></div>
-                                        <div className="mb-4"><label htmlFor="contact-email" className="form-label">Email</label><input type="email" className="form-control" id="contact-email" name="Email" required /></div>
-                                        <div className="mb-4"><label htmlFor="contact-message" className="form-label">Message</label><textarea className="form-control" id="contact-message" name="Message" rows="5" required></textarea></div>
-                                        <div className="text-center mt-5"><button type="submit" className="btn btn-primary btn-submit">Send Message</button></div>
-                                        {error && <p className="text-center text-danger mt-4">{error}</p>}
-                                    </form>
-                                )}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </>
-    );
-}
-
-*(Note: The full CSS string has been omitted from the code blocks above
+```bash
+git clone https://github.com/YOUR_USERNAME/talent-hunt-website.git
+cd talent-hunt-website
+npm install
+npm start

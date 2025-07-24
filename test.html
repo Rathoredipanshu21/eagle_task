@@ -1,0 +1,740 @@
+<!-- 
+================================================================================
+FILE: index.html
+PURPOSE: Main HTML file. This is the skeleton of your website.
+It includes all necessary libraries (Bootstrap, GSAP, AOS) and the basic layout.
+================================================================================
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EagleWeb | Talent Hunt</title>
+
+    <!-- Google Fonts: Syne (for headings) and Poppins (for body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap 5.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- AOS (Animate on Scroll) CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- Custom Stylesheet (Your custom styles) -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Unique Particle Background -->
+    <canvas id="particle-canvas"></canvas>
+
+    <!-- Header / Navigation -->
+    <header class="fixed-top">
+        <nav class="navbar navbar-expand-lg">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#" data-page="home">Eagle<span class="text-accent">Web</span></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto align-items-center">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#" data-page="home">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" data-page="details">Talent Hunts</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" data-page="about">About Us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" data-page="contact">Contact</a>
+                        </li>
+                        <li class="nav-item ms-lg-3 mt-3 mt-lg-0">
+                            <a class="btn btn-primary-custom" href="#" data-page="apply">Apply Now</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content Area (Pages will be injected here by JavaScript) -->
+    <main id="main-content">
+        <!-- Initial page content will be loaded by script.js -->
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <p class="mb-0">&copy; <span id="year"></span> EagleWeb. All Rights Reserved. Crafted with passion.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- GSAP (GreenSock Animation Platform) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+    <!-- AOS (Animate on Scroll) JS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <!-- Bootstrap 5.3 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script src="js/script.js"></script>
+
+</body>
+</html>
+
+<!-- 
+================================================================================
+FILE: css/style.css
+PURPOSE: All custom styling to create the unique look and feel.
+This file overrides Bootstrap defaults and adds all the stylish flair.
+================================================================================
+-->
+<style id="custom-styles">
+:root {
+    --dark-color: #0a0f18; /* Deep space blue */
+    --light-color: #f0f8ff; /* Alice blue (soft off-white) */
+    --accent-color: #00f5d4; /* Electric cyan/turquoise */
+    --gray-color: #a0a0a0;
+    --heading-font: 'Syne', sans-serif;
+    --body-font: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: var(--dark-color);
+    color: var(--light-color);
+    font-family: var(--body-font);
+    overflow-x: hidden;
+}
+
+/* Smooth Scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Particle Background Canvas */
+#particle-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: 0.5;
+}
+
+/* Header and Navbar Styling */
+.navbar {
+    background: rgba(10, 15, 24, 0.5);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1rem 0;
+}
+
+.navbar-brand {
+    font-family: var(--heading-font);
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--light-color) !important;
+}
+
+.text-accent {
+    color: var(--accent-color);
+}
+
+.nav-link {
+    color: var(--light-color) !important;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0 1rem;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--accent-color);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.4s ease-out;
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+.nav-link.active {
+    color: var(--accent-color) !important;
+}
+
+.navbar-toggler {
+    border-color: rgba(0, 245, 212, 0.5);
+}
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(0, 245, 212, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+/* Custom Button Styling */
+.btn-primary-custom {
+    background-color: var(--accent-color);
+    color: var(--dark-color);
+    font-family: var(--heading-font);
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 12px 30px;
+    border-radius: 50px;
+    border: 2px solid var(--accent-color);
+    transition: all 0.3s ease;
+}
+
+.btn-primary-custom:hover {
+    background-color: transparent;
+    color: var(--accent-color);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 245, 212, 0.2);
+}
+
+.btn-secondary-custom {
+    background-color: transparent;
+    color: var(--light-color);
+    font-family: var(--heading-font);
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 12px 30px;
+    border-radius: 50px;
+    border: 2px solid var(--gray-color);
+    transition: all 0.3s ease;
+}
+
+.btn-secondary-custom:hover {
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+    transform: translateY(-3px);
+}
+
+/* General Content Styling */
+main {
+    padding-top: 100px; /* Adjust for fixed header */
+}
+
+.section-padding {
+    padding: 100px 0;
+}
+
+.section-title {
+    font-family: var(--heading-font);
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+}
+
+.section-subtitle {
+    color: var(--gray-color);
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0 auto 4rem auto;
+}
+
+/* Hero Section Specifics */
+.hero-section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.hero-title {
+    font-family: var(--heading-font);
+    font-size: clamp(3rem, 10vw, 7rem); /* Responsive font size */
+    font-weight: 800;
+    line-height: 1.1;
+    text-transform: uppercase;
+}
+.hero-title .line {
+    display: block;
+    overflow: hidden; /* For GSAP animation */
+}
+.hero-title .line-inner {
+    display: block; /* For GSAP animation */
+}
+.hero-subtitle {
+    font-size: 1.25rem;
+    max-width: 700px;
+    margin: 2rem auto 3rem auto;
+    color: var(--gray-color);
+}
+
+/* Talent Card Styling */
+.talent-card {
+    background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0));
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 2rem;
+    transition: all 0.4s ease;
+    height: 100%;
+}
+.talent-card:hover {
+    transform: translateY(-10px);
+    border-color: var(--accent-color);
+    box-shadow: 0 10px 30px rgba(0, 245, 212, 0.1);
+}
+.talent-card .icon {
+    font-size: 2.5rem;
+    color: var(--accent-color);
+    margin-bottom: 1rem;
+}
+.talent-card h3 {
+    font-family: var(--heading-font);
+    font-size: 1.75rem;
+}
+.talent-card p {
+    color: var(--gray-color);
+}
+
+/* Form Styling */
+.form-control, .form-select {
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--light-color);
+    padding: 1rem;
+    border-radius: 8px;
+}
+.form-control:focus, .form-select:focus {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: var(--accent-color);
+    box-shadow: none;
+    color: var(--light-color);
+}
+.form-label {
+    font-weight: 500;
+    color: var(--gray-color);
+}
+
+/* Footer */
+.footer-section {
+    background-color: #060910;
+    padding: 2rem 0;
+    margin-top: 100px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+</style>
+
+<!-- 
+================================================================================
+FILE: js/script.js
+PURPOSE: All the interactivity and magic happens here.
+This includes page navigation, GSAP and AOS animations, and the particle background.
+================================================================================
+-->
+<script id="main-script">
+document.addEventListener('DOMContentLoaded', function() {
+
+    // --- PARTICLE BACKGROUND ---
+    const canvas = document.getElementById('particle-canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let particlesArray;
+
+    const mouse = {
+        x: null,
+        y: null,
+        radius: (canvas.height / 120) * (canvas.width / 120)
+    };
+
+    window.addEventListener('mousemove', function(event) {
+        mouse.x = event.x;
+        mouse.y = event.y;
+    });
+
+    class Particle {
+        constructor(x, y, directionX, directionY, size, color) {
+            this.x = x;
+            this.y = y;
+            this.directionX = directionX;
+            this.directionY = directionY;
+            this.size = size;
+            this.color = color;
+        }
+        draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
+            ctx.fillStyle = 'rgba(0, 245, 212, 0.5)';
+            ctx.fill();
+        }
+        update() {
+            if (this.x > canvas.width || this.x < 0) {
+                this.directionX = -this.directionX;
+            }
+            if (this.y > canvas.height || this.y < 0) {
+                this.directionY = -this.directionY;
+            }
+            let dx = mouse.x - this.x;
+            let dy = mouse.y - this.y;
+            let distance = Math.sqrt(dx * dx + dy * dy);
+            if (distance < mouse.radius + this.size) {
+                if (mouse.x < this.x && this.x < canvas.width - this.size * 10) {
+                    this.x += 5;
+                }
+                if (mouse.x > this.x && this.x > this.size * 10) {
+                    this.x -= 5;
+                }
+                if (mouse.y < this.y && this.y < canvas.height - this.size * 10) {
+                    this.y += 5;
+                }
+                if (mouse.y > this.y && this.y > this.size * 10) {
+                    this.y -= 5;
+                }
+            }
+            this.x += this.directionX;
+            this.y += this.directionY;
+            this.draw();
+        }
+    }
+
+    function initParticles() {
+        particlesArray = [];
+        let numberOfParticles = (canvas.height * canvas.width) / 9000;
+        for (let i = 0; i < numberOfParticles; i++) {
+            let size = (Math.random() * 2) + 1;
+            let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
+            let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
+            let directionX = (Math.random() * 0.4) - 0.2;
+            let directionY = (Math.random() * 0.4) - 0.2;
+            let color = 'rgba(0, 245, 212, 0.8)';
+            particlesArray.push(new Particle(x, y, directionX, directionY, size, color));
+        }
+    }
+
+    function animateParticles() {
+        requestAnimationFrame(animateParticles);
+        ctx.clearRect(0, 0, innerWidth, innerHeight);
+        for (let i = 0; i < particlesArray.length; i++) {
+            particlesArray[i].update();
+        }
+        connectParticles();
+    }
+
+    function connectParticles() {
+        let opacityValue = 1;
+        for (let a = 0; a < particlesArray.length; a++) {
+            for (let b = a; b < particlesArray.length; b++) {
+                let distance = ((particlesArray[a].x - particlesArray[b].x) * (particlesArray[a].x - particlesArray[b].x)) +
+                    ((particlesArray[a].y - particlesArray[b].y) * (particlesArray[a].y - particlesArray[b].y));
+                if (distance < (canvas.width / 7) * (canvas.height / 7)) {
+                    opacityValue = 1 - (distance / 20000);
+                    ctx.strokeStyle = 'rgba(0, 245, 212,' + opacityValue + ')';
+                    ctx.lineWidth = 1;
+                    ctx.beginPath();
+                    ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+                    ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+                    ctx.stroke();
+                }
+            }
+        }
+    }
+    
+    window.addEventListener('resize', function() {
+        canvas.width = innerWidth;
+        canvas.height = innerHeight;
+        mouse.radius = (canvas.height / 120) * (canvas.width / 120);
+        initParticles();
+    });
+    
+    window.addEventListener('mouseout', function() {
+        mouse.x = undefined;
+        mouse.y = undefined;
+    });
+
+    initParticles();
+    animateParticles();
+
+
+    // --- SPA-LIKE NAVIGATION ---
+    const mainContent = document.getElementById('main-content');
+    const navLinks = document.querySelectorAll('.nav-link, .navbar-brand, .btn-primary-custom');
+    const pageCache = {};
+
+    const pages = {
+        home: `
+            <section class="hero-section text-center">
+                <div class="container">
+                    <h1 class="hero-title">
+                        <span class="line"><span class="line-inner">The Hunt For</span></span>
+                        <span class="line"><span class="line-inner">Marketing</span></span>
+                        <span class="line"><span class="line-inner text-accent">Mavericks</span></span>
+                    </h1>
+                    <p class="hero-subtitle">We connect visionary talent with innovative brands to create campaigns that don't just sell—they inspire.</p>
+                    <div class="hero-buttons">
+                        <a href="#" class="btn btn-primary-custom" data-page="apply">Join The Hunt</a>
+                        <a href="#" class="btn btn-secondary-custom ms-3" data-page="details">Explore Roles</a>
+                    </div>
+                </div>
+            </section>
+        `,
+        details: `
+            <section class="section-padding">
+                <div class="container">
+                    <div class="text-center">
+                        <h2 class="section-title">Open Talent Hunts</h2>
+                        <p class="section-subtitle">We're looking for a diverse range of talents. Find where your skills shine brightest.</p>
+                    </div>
+                    <div class="row g-4">
+                        <div class="col-lg-4 col-md-6" data-aos="fade-up">
+                            <div class="talent-card">
+                                <div class="icon">🚀</div>
+                                <h3>Growth Marketers</h3>
+                                <p>Data-driven experts who master the art of acquisition, running campaigns on platforms like Google, Meta, and TikTok.</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                             <div class="talent-card">
+                                <div class="icon">🎨</div>
+                                <h3>Creative Designers</h3>
+                                <p>Architects of visual identity. You craft stunning brand experiences, intuitive UI/UX, and marketing assets.</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                             <div class="talent-card">
+                                <div class="icon">✍️</div>
+                                <h3>Content Strategists</h3>
+                                <p>Master storytellers. You write compelling narratives, persuasive copy, and SEO-driven content that builds brands.</p>
+                            </div>
+                        </div>
+                         <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                             <div class="talent-card">
+                                <div class="icon">📈</div>
+                                <h3>SEO Specialists</h3>
+                                <p>You live and breathe SERPs, technical audits, and content optimization to drive organic traffic and dominate rankings.</p>
+                            </div>
+                        </div>
+                         <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
+                             <div class="talent-card">
+                                <div class="icon">🎬</div>
+                                <h3>Video Creators</h3>
+                                <p>You bring stories to life through motion, producing everything from viral social clips to high-production brand films.</p>
+                            </div>
+                        </div>
+                         <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="500">
+                             <div class="talent-card">
+                                <div class="icon">💻</div>
+                                <h3>Webflow Developers</h3>
+                                <p>You build and optimize high-converting landing pages and marketing websites with technical excellence.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        `,
+        about: `
+             <section class="section-padding">
+                <div class="container">
+                    <div class="row align-items-center g-5">
+                        <div class="col-lg-6" data-aos="fade-right">
+                            <h2 class="section-title">We Are The Architects Of <span class="text-accent">Opportunity.</span></h2>
+                            <p class="section-subtitle text-start ms-0">We are the bridge between exceptional marketing talent and the brands shaping our future. Our passion is to see people thrive in roles that ignite their creativity and drive innovation.</p>
+                            <p class="text-white">Founded on the principle that the right person in the right role can change the trajectory of a business, EagleWeb was created to be more than a recruitment agency. We are career partners, brand builders, and relentless advocates for talent.</p>
+                        </div>
+                        <div class="col-lg-6" data-aos="fade-left">
+                            <img src="https://placehold.co/600x700/0a0f18/00f5d4?text=EagleWeb" class="img-fluid rounded-3" alt="About EagleWeb">
+                        </div>
+                    </div>
+                </div>
+            </section>
+        `,
+        contact: `
+            <section class="section-padding">
+                <div class="container">
+                    <div class="text-center">
+                        <h2 class="section-title">Let's Talk</h2>
+                        <p class="section-subtitle">Have a question or want to work with us? Drop us a line.</p>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8" data-aos="fade-up">
+                            <form>
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">Name</label>
+                                    <input type="text" class="form-control" id="name">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="email">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="message" class="form-label">Message</label>
+                                    <textarea class="form-control" id="message" rows="5"></textarea>
+                                </div>
+                                <div class="text-center mt-4">
+                                    <button type="submit" class="btn btn-primary-custom">Send Message</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        `,
+        apply: `
+            <section class="section-padding">
+                <div class="container">
+                    <div class="text-center">
+                        <h2 class="section-title">Join The Hunt</h2>
+                        <p class="section-subtitle">This is your moment. Fill out the form below and show us what you're made of.</p>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8" data-aos="fade-up">
+                             <form>
+                                <div class="row g-3">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="apply-name" class="form-label">Full Name</label>
+                                        <input type="text" class="form-control" id="apply-name" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="apply-email" class="form-label">Email Address</label>
+                                        <input type="email" class="form-control" id="apply-email" required>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="apply-portfolio" class="form-label">Portfolio / LinkedIn URL</label>
+                                    <input type="url" class="form-control" id="apply-portfolio" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="apply-category" class="form-label">Talent Category</label>
+                                    <select class="form-select" id="apply-category" required>
+                                        <option selected disabled value="">Choose...</option>
+                                        <option>Growth Marketer</option>
+                                        <option>Creative Designer</option>
+                                        <option>Content Strategist</option>
+                                        <option>SEO Specialist</option>
+                                        <option>Video Creator</option>
+                                        <option>Webflow Developer</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="apply-pitch" class="form-label">Your Pitch</label>
+                                    <textarea class="form-control" id="apply-pitch" rows="5" placeholder="Why are you the one we're looking for?"></textarea>
+                                </div>
+                                <div class="text-center mt-4">
+                                    <button type="submit" class="btn btn-primary-custom">Submit Application</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        `
+    };
+
+    function updateActiveLink(page) {
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.classList.remove('active');
+            if (link.dataset.page === page) {
+                link.classList.add('active');
+            }
+        });
+    }
+    
+    function animatePageIn(pageContent) {
+        // GSAP animation for page transition
+        const tl = gsap.timeline();
+        tl.to(mainContent, { opacity: 0, y: 20, duration: 0.3, ease: 'power2.in' })
+          .call(() => {
+              mainContent.innerHTML = pageContent;
+              AOS.init({
+                  duration: 1000,
+                  once: true,
+                  offset: 50,
+              });
+              AOS.refresh();
+              // Special animation for home page
+              if (mainContent.querySelector('.hero-section')) {
+                  animateHero();
+              }
+          })
+          .to(mainContent, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' });
+    }
+
+    function loadPage(page) {
+        if (pageCache[page]) {
+            animatePageIn(pageCache[page]);
+        } else {
+            const content = pages[page] || pages['home'];
+            pageCache[page] = content;
+            animatePageIn(content);
+        }
+        updateActiveLink(page);
+    }
+
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const page = e.currentTarget.dataset.page;
+            loadPage(page);
+            // Close mobile menu if open
+            const navbarCollapse = document.getElementById('navbarNav');
+            if (navbarCollapse.classList.contains('show')) {
+                new bootstrap.Collapse(navbarCollapse).hide();
+            }
+        });
+    });
+
+    // --- GSAP ANIMATIONS ---
+    function animateHero() {
+        gsap.from(".hero-title .line-inner", {
+            y: "100%",
+            duration: 1,
+            ease: "power4.out",
+            stagger: 0.1,
+            delay: 0.2
+        });
+        gsap.from(".hero-subtitle", {
+            opacity: 0,
+            y: 20,
+            duration: 1,
+            ease: "power2.out",
+            delay: 0.8
+        });
+        gsap.from(".hero-buttons", {
+            opacity: 0,
+            y: 20,
+            duration: 1,
+            ease: "power2.out",
+            delay: 1
+        });
+    }
+
+    // --- INITIALIZE ---
+    AOS.init({
+        duration: 1000,
+        once: true,
+        offset: 50,
+    });
+    
+    // Set current year in footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Load initial page
+    loadPage('home');
+
+});
+</script>

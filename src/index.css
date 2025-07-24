@@ -1,6 +1,4 @@
 body {
-  margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(to bottom right, #e0f7fa, #b2ebf2);
-  color: #222;
+  background-color: purple;
+  color: white;
 }
